@@ -26,10 +26,10 @@ const Content = styled.section`
 		color: var(--background);
 		background-color: var(--purple-light);
 
-		transition: filter .2s;
+		transition: filter 0.2s;
 
 		&:hover {
-			filter: brightness(0.9);
+			filter: brightness(0.95);
 		}
 	}
 `;

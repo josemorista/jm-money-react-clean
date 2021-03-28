@@ -24,6 +24,10 @@ export const GlobalStyles = createGlobalStyle`
 		box-sizing: border-box;
 		box-shadow: none;
 		font-weight: 400;
+		&:active,
+		&:focus {
+			outline: none;
+		}
 	}
 
 	body {
@@ -64,6 +68,39 @@ export const GlobalStyles = createGlobalStyle`
 
 	button {
 		cursor: pointer;
+	}
+
+	.react-modal-overlay {
+		
+		z-index: 100;
+
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		background-color: rgba(0,0,0, 0.6);
+
+	}
+
+	.react-modal-body {
+
+		position: relative;
+		
+		width: 100%;
+		max-width: 576px;
+
+		padding: 3rem;
+
+		background-color: var(--background);
+		outline: none;
+
+		border-radius: 0.24rem;
 	}
 
 `;
