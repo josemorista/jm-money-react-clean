@@ -1,7 +1,32 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { container } from 'tsyringe';
+import { ITransaction } from '../../../../../domain/modules/transactions/entities/ITransaction';
+import { GetTransactionsService } from '../../../../../domain/modules/transactions/services/GetTransactionsService';
 import { DashboardTransactionsTable } from '../../../../styles/components/pages/Dashboard/TransactionsTable';
+import { format } from 'date-fns';
+import { currencyFormatter } from '../../../../utils/currencyFormatter';
+
+const getTransactionsService = container.resolve(GetTransactionsService);
+
+interface IPresentationTransaction extends ITransaction {
+	formattedPrice: string;
+	formattedDate: string;
+}
 
 export const TransactionsTable: FC = () => {
+
+	const [transactions, setTransactions] = useState<Array<IPresentationTransaction>>([]);
+
+	useEffect(() => {
+		getTransactionsService.execute().then(fetchedTransactions => {
+			setTransactions(fetchedTransactions.map(transaction => ({
+				...transaction,
+				formattedPrice: currencyFormatter(transaction.value),
+				formattedDate: format(new Date(transaction.date), 'DD/MM/YYYY')
+			})));
+		});
+	}, []);
+
 	return <DashboardTransactionsTable.Container>
 		<table>
 			<thead>
@@ -13,24 +38,14 @@ export const TransactionsTable: FC = () => {
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>Pão de forma</td>
-					<td className='outcome'>- R$ 6,00</td>
-					<td>Mercado</td>
-					<td>23/02/2021</td>
-				</tr>
-				<tr>
-					<td>Pão de forma</td>
-					<td className='outcome'>- R$ 6,00</td>
-					<td>Mercado</td>
-					<td>23/02/2021</td>
-				</tr>
-				<tr>
-					<td>Pagamento Juca</td>
-					<td className='income'>R$ 100,00</td>
-					<td>Dívida</td>
-					<td>23/02/2021</td>
-				</tr>
+				{transactions.map(transaction => (
+					<tr key={transaction.id}>
+						<td>{transaction.title}</td>
+						<td className={transaction.type}>{transaction.formattedPrice}</td>
+						<td>{transaction.category}</td>
+						<td>{transaction.date}</td>
+					</tr>
+				))}
 			</tbody>
 		</table>
 	</DashboardTransactionsTable.Container>;
