@@ -1,30 +1,37 @@
-import { createServer } from 'miragejs';
-import { ITransaction } from './domain/modules/transactions/entities/ITransaction';
+import { createServer, Model } from 'miragejs';
+import { v4 as uuid } from 'uuid';
 
 createServer({
-
+	models: {
+		transaction: Model
+	},
+	seeds(server) {
+		server.db.loadData({
+			transactions: [
+				{
+					id: uuid(),
+					title: 'Exemplo de titulo',
+					value: 5500,
+					type: 'income',
+					category: 'Exemplo de categoria',
+					date: new Date()
+				}
+			]
+		});
+	},
 	routes() {
 		this.namespace = 'api';
+
 		this.get('/transactions', () => {
-			const transactions: Array<ITransaction> = [
-				{
-					id: '1',
-					type: 'income',
-					category: 'Pagamento',
-					title: 'Salário',
-					value: 5500,
-					date: new Date()
-				},
-				{
-					id: '2',
-					type: 'outcome',
-					category: 'Mercado',
-					title: 'Compras',
-					value: 227,
-					date: new Date()
-				},
-			];
-			return transactions;
+			return this.schema.all('transaction');
+		});
+
+		this.post('/transactions', (schema, request) => {
+			const body = JSON.parse(request.requestBody);
+			return schema.create('transaction', {
+				id: uuid(),
+				...body
+			});
 		});
 	}
 });

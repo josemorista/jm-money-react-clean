@@ -11,9 +11,9 @@ export class GetTransactionsService {
 	) { }
 
 	async execute(): Promise<Array<ITransaction>> {
-		const { data } = await this.httpClientProvider.get<Array<ITransaction>>({
+		const { data } = await this.httpClientProvider.get<{ transactions: Array<ITransaction> }>({
 			url: `${API_BASE_URL}/transactions`
 		});
-		return data;
+		return data.transactions;
 	}
 }
