@@ -21,8 +21,8 @@ export const TransactionsTable: FC = () => {
 		getTransactionsService.execute().then(fetchedTransactions => {
 			setTransactions(fetchedTransactions.map(transaction => ({
 				...transaction,
-				formattedPrice: currencyFormatter(transaction.value),
-				formattedDate: format(new Date(transaction.date), 'DD/MM/YYYY')
+				formattedPrice: (transaction.type === 'outcome' ? '-' : '') + currencyFormatter(transaction.value),
+				formattedDate: format(new Date(transaction.date), 'dd/MM/yyyy')
 			})));
 		});
 	}, []);
@@ -43,7 +43,7 @@ export const TransactionsTable: FC = () => {
 						<td>{transaction.title}</td>
 						<td className={transaction.type}>{transaction.formattedPrice}</td>
 						<td>{transaction.category}</td>
-						<td>{transaction.date}</td>
+						<td>{transaction.formattedDate}</td>
 					</tr>
 				))}
 			</tbody>
