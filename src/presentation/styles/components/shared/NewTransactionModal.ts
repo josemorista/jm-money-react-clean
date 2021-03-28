@@ -37,33 +37,6 @@ const Container = styled.form`
 		}
 	}
 
-	.outcome-or-income {
-		display: flex;
-		
-		> button {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex: 1;
-
-			height: 4rem;
-
-			border: 1.5px solid #969CB3;
-			border-radius: 0.25rem;
-
-			font-size: 1rem;
-			color: var(--text-title);
-
-			&+button {
-				margin-left: 0.5rem;
-			}
-
-			> img {
-				margin-right: 0.5rem;
-			}
-		}
-	}
-
 	button[type='submit'] {
 		
 		width: 100%;
@@ -81,6 +54,40 @@ const Container = styled.form`
 
 `;
 
+export const OutComeOrIncome = styled.section`
+	display: flex;
+	
+	> button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+
+		height: 4rem;
+
+		border: 1.5px solid #969CB3;
+		border-radius: 0.25rem;
+
+		font-size: 1rem;
+		color: var(--text-title);
+
+		&+button {
+			margin-left: 0.5rem;
+		}
+
+		> img {
+			margin-right: 0.5rem;
+		}
+
+		&.selected {
+			background-color: var(--shape);
+			border-color: var(--green);
+		}
+	}
+	
+`;
+
 export const NewTransactionModalStyles = {
-	Container
+	Container,
+	OutComeOrIncome
 };

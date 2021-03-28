@@ -92,7 +92,7 @@ export const GlobalStyles = createGlobalStyle`
 
 		position: relative;
 		
-		width: 100%;
+		width: calc(100% - 2rem);
 		max-width: 576px;
 
 		padding: 3rem;

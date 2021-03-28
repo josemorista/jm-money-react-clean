@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Container = styled.section`
 	margin-top: 4rem;
+	overflow-x: auto;
 
 	table {
 		width: 100%;
