@@ -3,8 +3,8 @@ import { container } from 'tsyringe';
 import { ITransaction } from '../../../../../domain/modules/transactions/entities/ITransaction';
 import { GetTransactionsService } from '../../../../../domain/modules/transactions/services/GetTransactionsService';
 import { DashboardTransactionsTable } from '../../../../styles/components/pages/Dashboard/TransactionsTable';
-import { format } from 'date-fns';
 import { currencyFormatter } from '../../../../utils/currencyFormatter';
+import { dateFormatter } from '../../../../utils/dateFormatter';
 
 const getTransactionsService = container.resolve(GetTransactionsService);
 
@@ -22,7 +22,7 @@ export const TransactionsTable: FC = () => {
 			setTransactions(fetchedTransactions.map(transaction => ({
 				...transaction,
 				formattedPrice: (transaction.type === 'outcome' ? '-' : '') + currencyFormatter(transaction.value),
-				formattedDate: format(new Date(transaction.date), 'dd/MM/yyyy')
+				formattedDate: dateFormatter(new Date(transaction.date))
 			})));
 		});
 	}, []);
